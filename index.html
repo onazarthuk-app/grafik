@@ -1,5 +1,19 @@
 <!DOCTYPE html>
 <html lang="uk">
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBrgNOURd5uoMvBF7rW_ShK4yZEaeiBzCQ",
+  authDomain: "grafik-montage.firebaseapp.com",
+  databaseURL: "https://grafik-montage-default-rtdb.europe-west1.firebasedatabase.app/",
+  projectId: "grafik-montage"
+};
+
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+</script>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -987,10 +1001,10 @@ var monthNames = ['Січень','Лютий','Березень','Квітень
 var dayNames = ['Нд','Пн','Вт','Ср','Чт','Пт','Сб'];
 
 function load() {
-  var saved = localStorage.getItem('schedule_orders_v3');
-  if (saved) {
-    orders = JSON.parse(saved);
-  }
+  firebase.database().ref('orders').on('value', function(snapshot) {
+  orders = snapshot.val() || [];
+  renderView();
+});
   var savedHolidays = localStorage.getItem('schedule_holidays');
   if (savedHolidays) {
     holidays = JSON.parse(savedHolidays);
@@ -999,7 +1013,7 @@ function load() {
 }
 
 function save() {
-  localStorage.setItem('schedule_orders_v3', JSON.stringify(orders));
+ firebase.database().ref('orders').set(orders);
 }
 
 function saveHolidays() {
