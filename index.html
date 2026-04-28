@@ -848,9 +848,10 @@ body {
       <div class="form-group">
         <label class="form-label">Статус</label>
         <select id="status" class="form-select">
-          <option value="client">В клієнта</option>
-          <option value="repair">Поправка</option>
-          <option value="delivery">Доставка</option>
+          <option value="client">Заміри</option>
+          <option value="repair">Монтаж</option>
+          <option value="delivery">Поправка</option>
+          <option value="delivery">Рекламація</option>
         </select>
       </div>
       
@@ -1251,7 +1252,7 @@ function renderMonthView() {
 }
 
 function renderOrderCard(order) {
-  const statusMap = { 'client': 'В клієнта', 'repair': 'Поправка', 'delivery': 'Доставка' };
+  const statusMap = { 'client': 'Заміри', 'repair': 'Монтаж', 'delivery': 'Поправка', 'reclamation': 'Рекламація' };
   const statusClass = order.status;
   
   let html = `<div class="order-card" onclick="editOrder(${order.id})">
