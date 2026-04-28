@@ -1,19 +1,5 @@
 <!DOCTYPE html>
 <html lang="uk">
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"></script>
-
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyBrgNOURd5uoMvBF7rW_ShK4yZEaeiBzCQ",
-  authDomain: "grafik-montage.firebaseapp.com",
-  databaseURL: "https://grafik-montage-default-rtdb.europe-west1.firebasedatabase.app/",
-  projectId: "grafik-montage"
-};
-
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-</script>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -22,7 +8,6 @@ const db = firebase.database();
 <meta name="apple-mobile-web-app-title" content="Графік">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234f46e5'/%3E%3Cstop offset='1' stop-color='%237c3aed'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g)' width='180' height='180' rx='40'/%3E%3Cpath fill='white' d='M50 60h80v10h-80zm0 20h80v10h-80zm0 20h60v10h-60z'/%3E%3Ccircle fill='white' cx='60' cy='120' r='4'/%3E%3Ccircle fill='white' cx='80' cy='120' r='4'/%3E%3Ccircle fill='white' cx='100' cy='120' r='4'/%3E%3C/svg%3E">
 <title>Графік монтажів</title>
-  <link rel="apple-touch-icon" href="icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
@@ -171,14 +156,6 @@ body {
   overflow: hidden;
 }
 
-.stat-card.clickable {
-  cursor: pointer;
-}
-
-.stat-card.clickable:active {
-  transform: scale(0.97);
-}
-
 .stat-card::before {
   content: '';
   position: absolute;
@@ -212,112 +189,8 @@ body {
   margin-top: 2px;
 }
 
-.stat-hidden {
-  font-size: 14px;
-  color: var(--text-dim);
-}
-
 .timeline {
   padding: 12px 20px 20px;
-}
-
-.calendar-grid {
-  padding: 20px;
-}
-
-.cal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.cal-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.cal-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.cal-day-label {
-  text-align: center;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-muted);
-  padding: 8px 0;
-}
-
-.cal-dates {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-}
-
-.cal-date {
-  aspect-ratio: 1;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  transition: all 0.2s;
-}
-
-.cal-date.other-month {
-  opacity: 0.3;
-}
-
-.cal-date.weekend {
-  background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05));
-  border-color: rgba(239,68,68,0.3);
-}
-
-.cal-date.holiday {
-  background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(245,158,11,0.05));
-  border-color: rgba(245,158,11,0.3);
-}
-
-.cal-date.has-orders {
-  background: linear-gradient(135deg, var(--accent), var(--purple));
-  color: white;
-  border-color: transparent;
-}
-
-.cal-date.today {
-  box-shadow: 0 0 0 2px var(--accent);
-}
-
-.cal-date:active {
-  transform: scale(0.95);
-}
-
-.cal-orders-count {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 16px;
-  height: 16px;
-  background: white;
-  color: var(--accent);
-  border-radius: 50%;
-  font-size: 9px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .day-group {
@@ -344,7 +217,7 @@ body {
   justify-content: center;
 }
 
-.day-badge.weekend, .day-badge.holiday {
+.day-badge.weekend {
   background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05));
   border-color: rgba(239,68,68,0.3);
 }
@@ -399,12 +272,8 @@ body {
   top: 0;
   bottom: 0;
   width: 4px;
+  background: linear-gradient(180deg, var(--accent), var(--purple));
 }
-
-.order-card.status-working::before { background: linear-gradient(180deg, var(--accent), var(--purple)); }
-.order-card.status-completed::before { background: linear-gradient(180deg, var(--success), #059669); }
-.order-card.status-taken::before { background: linear-gradient(180deg, var(--warning), #d97706); }
-.order-card.status-not-completed::before { background: linear-gradient(180deg, var(--danger), #dc2626); }
 
 .order-card:active {
   transform: scale(0.98);
@@ -436,10 +305,9 @@ body {
   letter-spacing: 0.03em;
 }
 
-.status-working { background: rgba(99,102,241,0.2); color: var(--accent); }
-.status-completed { background: rgba(16,185,129,0.2); color: var(--success); }
-.status-taken { background: rgba(245,158,11,0.2); color: var(--warning); }
-.status-not-completed { background: rgba(239,68,68,0.2); color: var(--danger); }
+.status-client { background: rgba(99,102,241,0.2); color: var(--accent); }
+.status-repair { background: rgba(245,158,11,0.2); color: var(--warning); }
+.status-delivery { background: rgba(16,185,129,0.2); color: var(--success); }
 
 .client-name {
   font-size: 17px;
@@ -459,7 +327,9 @@ body {
   text-decoration: none;
 }
 
-.client-phone:active { opacity: 0.7; }
+.client-phone:active {
+  opacity: 0.7;
+}
 
 .order-address {
   font-size: 16px;
@@ -472,7 +342,9 @@ body {
   text-decoration: none;
 }
 
-.order-address:active { opacity: 0.7; }
+.order-address:active {
+  opacity: 0.7;
+}
 
 .order-details {
   display: grid;
@@ -500,10 +372,6 @@ body {
   font-size: 14px;
   font-weight: 600;
   color: var(--text);
-}
-
-.detail-value.debt {
-  color: var(--danger);
 }
 
 .order-notes {
@@ -599,7 +467,9 @@ body {
   color: var(--text-dim);
 }
 
-.bottom-btn:active { transform: scale(0.95); }
+.bottom-btn:active {
+  transform: scale(0.95);
+}
 
 .modal {
   display: none;
@@ -695,7 +565,6 @@ input:focus, select:focus, textarea:focus {
 textarea { min-height: 70px; resize: vertical; }
 
 .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.row-debt { display: grid; grid-template-columns: 100px 1fr; gap: 10px; align-items: end; }
 
 .btn-group {
   display: flex;
@@ -771,10 +640,10 @@ textarea { min-height: 70px; resize: vertical; }
 
 @media print {
   body { background: white; padding: 0; }
-  .header, .stats, .timeline, .bottom-bar, .fab, .calendar-grid { display: none !important; }
+  .header, .stats, .timeline, .bottom-bar, .fab { display: none !important; }
   .print-doc { display: block !important; padding: 15mm; font-size: 10pt; color: #000; }
   .print-doc table { width: 100%; border-collapse: collapse; margin-top: 10pt; }
-  .print-doc th, .print-doc td { border: 1px solid #000; padding: 4pt 6pt; text-align: center; font-size: 9pt; }
+  .print-doc th, .print-doc td { border: 1px solid #000; padding: 4pt 6pt; text-align: left; font-size: 9pt; }
   .print-doc th { background: #f0f0f0; font-weight: 600; }
   .print-doc h1 { font-size: 16pt; margin-bottom: 12pt; text-align: center; }
   .print-doc .info { margin-bottom: 10pt; font-size: 9pt; }
@@ -793,7 +662,6 @@ textarea { min-height: 70px; resize: vertical; }
     <div class="header-title">Графік монтажів</div>
   </div>
   <div class="view-selector">
-    <div class="view-btn" id="viewCal" onclick="setView('calendar')">Календар</div>
     <div class="view-btn active" id="viewDay" onclick="setView('day')">День</div>
     <div class="view-btn" id="viewWeek" onclick="setView('week')">Тиждень</div>
     <div class="view-btn" id="viewMonth" onclick="setView('month')">Місяць</div>
@@ -816,32 +684,16 @@ textarea { min-height: 70px; resize: vertical; }
     <div class="stat-value" id="totalDoors">0</div>
     <div class="stat-sub">шт</div>
   </div>
-  <div class="stat-card clickable" id="revenueCard" onclick="toggleRevenue()">
+  <div class="stat-card">
     <div class="stat-label">Виручка</div>
-    <div class="stat-value stat-hidden" id="totalRevenue">●●●●</div>
-    <div class="stat-sub">показати</div>
+    <div class="stat-value" id="totalRevenue">0</div>
+    <div class="stat-sub">грн</div>
   </div>
   <div class="stat-card">
     <div class="stat-label">Робочих</div>
     <div class="stat-value" id="workDays">0</div>
     <div class="stat-sub">днів</div>
   </div>
-</div>
-
-<div class="calendar-grid" id="calendarView" style="display:none;">
-  <div class="cal-header">
-    <div class="cal-title">Натисніть на день для позначення вихідного/святкового</div>
-  </div>
-  <div class="cal-days">
-    <div class="cal-day-label">Пн</div>
-    <div class="cal-day-label">Вт</div>
-    <div class="cal-day-label">Ср</div>
-    <div class="cal-day-label">Чт</div>
-    <div class="cal-day-label">Пт</div>
-    <div class="cal-day-label">Сб</div>
-    <div class="cal-day-label">Нд</div>
-  </div>
-  <div class="cal-dates" id="calDates"></div>
 </div>
 
 <div class="timeline" id="timeline"></div>
@@ -902,17 +754,28 @@ textarea { min-height: 70px; resize: vertical; }
     <div class="form-field">
       <div class="field-label">Статус</div>
       <select id="status">
-        <option value="working">Роботи</option>
-        <option value="completed">Завершений</option>
-        <option value="taken">Взятий</option>
-        <option value="not-completed">Не завершений</option>
+        <option value="client">В клієнта</option>
+        <option value="repair">Поправка</option>
+        <option value="delivery">Доставка</option>
       </select>
     </div>
 
     <div class="row-2">
       <div class="form-field">
         <div class="field-label">Виробник</div>
-        <input type="text" id="manufacturer" placeholder="Rodos, Maksi...">
+        <select id="manufacturer">
+          <option value="">Обрати...</option>
+          <option value="Rodos">Rodos</option>
+          <option value="Новий Стиль">Новий Стиль</option>
+          <option value="Terminus">Terminus</option>
+          <option value="Verto">Verto</option>
+          <option value="Porta">Porta</option>
+          <option value="Родос">Родос</option>
+          <option value="Maksi">Maksi</option>
+          <option value="Galant">Galant</option>
+          <option value="Leador">Leador</option>
+          <option value="Grazio">Grazio</option>
+        </select>
       </div>
       <div class="form-field">
         <div class="field-label">Кількість дверей</div>
@@ -928,28 +791,6 @@ textarea { min-height: 70px; resize: vertical; }
       <div class="form-field">
         <div class="field-label">Магазин</div>
         <input type="text" id="store" placeholder="Назва">
-      </div>
-    </div>
-
-    <div class="form-field">
-      <div class="field-label">Борг клієнта</div>
-      <div class="row-debt">
-        <select id="clientDebtType">
-          <option value="no">Немає</option>
-          <option value="yes">Є</option>
-        </select>
-        <input type="number" id="clientDebt" placeholder="Сума боргу" style="display:none;">
-      </div>
-    </div>
-
-    <div class="form-field">
-      <div class="field-label">Борг магазину</div>
-      <div class="row-debt">
-        <select id="storeDebtType">
-          <option value="no">Немає</option>
-          <option value="yes">Є</option>
-        </select>
-        <input type="number" id="storeDebt" placeholder="Сума боргу" style="display:none;">
       </div>
     </div>
 
@@ -970,7 +811,8 @@ textarea { min-height: 70px; resize: vertical; }
   <h1>Графік монтажів</h1>
   <div class="info">
     <strong>Період:</strong> <span id="p_period"></span><br>
-    <strong>Всього замовлень:</strong> <span id="p_orders"></span>
+    <strong>Всього замовлень:</strong> <span id="p_orders"></span><br>
+    <strong>Загальна виручка:</strong> <span id="p_revenue"></span> грн
   </div>
   <table>
     <thead>
@@ -983,6 +825,7 @@ textarea { min-height: 70px; resize: vertical; }
         <th>Статус</th>
         <th>Виробник</th>
         <th>К-сть</th>
+        <th>Ціна</th>
         <th>Магазин</th>
       </tr>
     </thead>
@@ -994,42 +837,26 @@ textarea { min-height: 70px; resize: vertical; }
 var currentDate = new Date();
 var viewMode = 'day';
 var orders = [];
-var holidays = [];
-var revenueVisible = false;
 
 var monthNames = ['Січень','Лютий','Березень','Квітень','Травень','Червень','Липень','Серпень','Вересень','Жовтень','Листопад','Грудень'];
 var dayNames = ['Нд','Пн','Вт','Ср','Чт','Пт','Сб'];
 
 function load() {
-  firebase.database().ref('orders').on('value', function(snapshot) {
-  orders = snapshot.val() || [];
-  renderView();
-});
-  var savedHolidays = localStorage.getItem('schedule_holidays');
-  if (savedHolidays) {
-    holidays = JSON.parse(savedHolidays);
+  var saved = localStorage.getItem('schedule_orders_v2');
+  if (saved) {
+    orders = JSON.parse(saved);
   }
   renderView();
 }
 
 function save() {
- firebase.database().ref('orders').set(orders);
-}
-
-function saveHolidays() {
-  localStorage.setItem('schedule_holidays', JSON.stringify(holidays));
-}
-
-function toggleRevenue() {
-  revenueVisible = !revenueVisible;
-  renderView();
+  localStorage.setItem('schedule_orders_v2', JSON.stringify(orders));
 }
 
 function setView(mode) {
   viewMode = mode;
   document.querySelectorAll('.view-btn').forEach(function(b) { b.classList.remove('active'); });
-  var btnId = 'view' + (mode === 'calendar' ? 'Cal' : mode.charAt(0).toUpperCase() + mode.slice(1));
-  document.getElementById(btnId).classList.add('active');
+  document.getElementById('view' + mode.charAt(0).toUpperCase() + mode.slice(1)).classList.add('active');
   renderView();
 }
 
@@ -1048,107 +875,6 @@ function nextPeriod() {
 }
 
 function renderView() {
-  if (viewMode === 'calendar') {
-    document.getElementById('calendarView').style.display = 'block';
-    document.getElementById('timeline').style.display = 'none';
-    renderCalendar();
-  } else {
-    document.getElementById('calendarView').style.display = 'none';
-    document.getElementById('timeline').style.display = 'block';
-    renderTimeline();
-  }
-  updateStats();
-}
-
-function renderCalendar() {
-  var year = currentDate.getFullYear();
-  var month = currentDate.getMonth();
-  
-  document.getElementById('periodDisplay').textContent = monthNames[month] + ' ' + year;
-  
-  var firstDay = new Date(year, month, 1);
-  var lastDay = new Date(year, month + 1, 0);
-  var startDay = firstDay.getDay();
-  var daysInMonth = lastDay.getDate();
-  
-  var startOffset = startDay === 0 ? 6 : startDay - 1;
-  
-  var html = '';
-  var date = 1;
-  var nextMonthDate = 1;
-  var totalCells = Math.ceil((daysInMonth + startOffset) / 7) * 7;
-  
-  for (var i = 0; i < totalCells; i++) {
-    var cellDate, cellMonth, cellYear;
-    var classes = ['cal-date'];
-    
-    if (i < startOffset) {
-      var prevMonth = month === 0 ? 11 : month - 1;
-      var prevYear = month === 0 ? year - 1 : year;
-      var prevMonthDays = new Date(prevYear, prevMonth + 1, 0).getDate();
-      cellDate = prevMonthDays - startOffset + i + 1;
-      cellMonth = prevMonth;
-      cellYear = prevYear;
-      classes.push('other-month');
-    } else if (date <= daysInMonth) {
-      cellDate = date;
-      cellMonth = month;
-      cellYear = year;
-      date++;
-    } else {
-      cellDate = nextMonthDate;
-      cellMonth = month === 11 ? 0 : month + 1;
-      cellYear = month === 11 ? year + 1 : year;
-      classes.push('other-month');
-      nextMonthDate++;
-    }
-    
-    var dateStr = formatDateKey(new Date(cellYear, cellMonth, cellDate));
-    var d = new Date(cellYear, cellMonth, cellDate);
-    var dayOfWeek = d.getDay();
-    
-    if (dayOfWeek === 0 || dayOfWeek === 6) {
-      classes.push('weekend');
-    }
-    
-    if (holidays.indexOf(dateStr) !== -1) {
-      classes.push('holiday');
-    }
-    
-    var ordersOnDate = orders.filter(function(o) { return o.date === dateStr; });
-    if (ordersOnDate.length > 0) {
-      classes.push('has-orders');
-    }
-    
-    var today = new Date();
-    if (d.getDate() === today.getDate() && d.getMonth() === today.getMonth() && d.getFullYear() === today.getFullYear()) {
-      classes.push('today');
-    }
-    
-    html += '<div class="' + classes.join(' ') + '" onclick="toggleHoliday(\'' + dateStr + '\')">';
-    html += '<div>' + cellDate + '</div>';
-    if (ordersOnDate.length > 0) {
-      html += '<div class="cal-orders-count">' + ordersOnDate.length + '</div>';
-    }
-    html += '</div>';
-  }
-  
-  document.getElementById('calDates').innerHTML = html;
-  updateStats();
-}
-
-function toggleHoliday(dateStr) {
-  var idx = holidays.indexOf(dateStr);
-  if (idx === -1) {
-    holidays.push(dateStr);
-  } else {
-    holidays.splice(idx, 1);
-  }
-  saveHolidays();
-  renderCalendar();
-}
-
-function renderTimeline() {
   var filtered = [];
   var displayText = '';
   
@@ -1178,6 +904,20 @@ function renderTimeline() {
   
   document.getElementById('periodDisplay').textContent = displayText;
   
+  var totalDoors = 0;
+  var totalRev = 0;
+  var workDays = new Set();
+  filtered.forEach(function(o) {
+    totalDoors += parseInt(o.quantity || 1);
+    totalRev += parseFloat(o.price || 0) * parseInt(o.quantity || 1);
+    workDays.add(o.date);
+  });
+  
+  document.getElementById('totalOrders').textContent = filtered.length;
+  document.getElementById('totalDoors').textContent = totalDoors;
+  document.getElementById('totalRevenue').textContent = Math.round(totalRev).toLocaleString('uk-UA');
+  document.getElementById('workDays').textContent = workDays.size;
+  
   var byDay = {};
   filtered.forEach(function(o) {
     if (!byDay[o.date]) byDay[o.date] = [];
@@ -1195,12 +935,11 @@ function renderTimeline() {
       var dayNum = d.getDate();
       var dayName = dayNames[d.getDay()];
       var isWeekend = d.getDay() === 0 || d.getDay() === 6;
-      var isHoliday = holidays.indexOf(dateStr) !== -1;
       var dayOrders = byDay[dateStr];
       
       html += '<div class="day-group">';
       html += '<div class="day-header">';
-      html += '<div class="day-badge' + (isWeekend || isHoliday ? ' weekend holiday' : '') + '">';
+      html += '<div class="day-badge' + (isWeekend ? ' weekend' : '') + '">';
       html += '<div class="day-num">' + dayNum + '</div>';
       html += '<div class="day-name">' + dayName + '</div>';
       html += '</div>';
@@ -1210,11 +949,11 @@ function renderTimeline() {
       html += '</div>';
       html += '</div>';
       
-      dayOrders.forEach(function(order) {
+      dayOrders.forEach(function(order, idx) {
         var statusClass = 'status-' + order.status;
-        var statusText = getStatusText(order.status);
+        var statusText = order.status === 'client' ? 'В клієнта' : order.status === 'repair' ? 'Поправка' : 'Доставка';
         
-        html += '<div class="order-card ' + statusClass + '" onclick="editOrder(' + order.id + ')">';
+        html += '<div class="order-card" onclick="editOrder(' + order.id + ')">';
         html += '<div class="order-header">';
         html += '<div class="order-time">🕐 ' + order.time + '</div>';
         html += '<div class="order-status ' + statusClass + '">' + statusText + '</div>';
@@ -1227,14 +966,6 @@ function renderTimeline() {
         html += '<div class="detail-item"><div class="detail-label">Кількість</div><div class="detail-value">' + order.quantity + ' шт</div></div>';
         html += '<div class="detail-item"><div class="detail-label">Ціна</div><div class="detail-value">' + (order.price || 0) + ' грн</div></div>';
         html += '<div class="detail-item"><div class="detail-label">Магазин</div><div class="detail-value">' + (order.store || '—') + '</div></div>';
-        
-        if (order.clientDebt && parseFloat(order.clientDebt) > 0) {
-          html += '<div class="detail-item"><div class="detail-label">Борг клієнта</div><div class="detail-value debt">' + order.clientDebt + ' грн</div></div>';
-        }
-        if (order.storeDebt && parseFloat(order.storeDebt) > 0) {
-          html += '<div class="detail-item"><div class="detail-label">Борг магазину</div><div class="detail-value debt">' + order.storeDebt + ' грн</div></div>';
-        }
-        
         html += '</div>';
         if (order.notes) {
           html += '<div class="order-notes">📝 ' + order.notes + '</div>';
@@ -1247,69 +978,6 @@ function renderTimeline() {
   }
   
   document.getElementById('timeline').innerHTML = html;
-}
-
-function updateStats() {
-  var filtered = [];
-  
-  if (viewMode === 'calendar') {
-    var year = currentDate.getFullYear();
-    var month = currentDate.getMonth();
-    filtered = orders.filter(function(o) {
-      var d = new Date(o.date);
-      return d.getMonth() === month && d.getFullYear() === year;
-    });
-  } else if (viewMode === 'day') {
-    var dayStr = formatDateKey(currentDate);
-    filtered = orders.filter(function(o) { return o.date === dayStr; });
-  } else if (viewMode === 'week') {
-    var weekStart = new Date(currentDate);
-    weekStart.setDate(weekStart.getDate() - weekStart.getDay() + 1);
-    var weekEnd = new Date(weekStart);
-    weekEnd.setDate(weekEnd.getDate() + 6);
-    filtered = orders.filter(function(o) {
-      var od = new Date(o.date + 'T00:00:00');
-      return od >= weekStart && od <= weekEnd;
-    });
-  } else {
-    var year = currentDate.getFullYear();
-    var month = currentDate.getMonth();
-    filtered = orders.filter(function(o) {
-      var d = new Date(o.date);
-      return d.getMonth() === month && d.getFullYear() === year;
-    });
-  }
-  
-  var totalDoors = 0;
-  var totalRev = 0;
-  var workDays = new Set();
-  filtered.forEach(function(o) {
-    totalDoors += parseInt(o.quantity || 1);
-    totalRev += parseFloat(o.price || 0) * parseInt(o.quantity || 1);
-    workDays.add(o.date);
-  });
-  
-  document.getElementById('totalOrders').textContent = filtered.length;
-  document.getElementById('totalDoors').textContent = totalDoors;
-  document.getElementById('workDays').textContent = workDays.size;
-  
-  if (revenueVisible) {
-    document.getElementById('totalRevenue').textContent = Math.round(totalRev).toLocaleString('uk-UA');
-    document.getElementById('totalRevenue').classList.remove('stat-hidden');
-    document.getElementById('revenueCard').querySelector('.stat-sub').textContent = 'грн';
-  } else {
-    document.getElementById('totalRevenue').textContent = '●●●●';
-    document.getElementById('totalRevenue').classList.add('stat-hidden');
-    document.getElementById('revenueCard').querySelector('.stat-sub').textContent = 'показати';
-  }
-}
-
-function getStatusText(status) {
-  if (status === 'working') return 'Роботи';
-  if (status === 'completed') return 'Завершений';
-  if (status === 'taken') return 'Взятий';
-  if (status === 'not-completed') return 'Не завершений';
-  return status;
 }
 
 function formatDateKey(d) {
@@ -1331,16 +999,6 @@ function formatDateShort(d) {
   return day + '.' + month;
 }
 
-document.getElementById('clientDebtType').addEventListener('change', function() {
-  document.getElementById('clientDebt').style.display = this.value === 'yes' ? 'block' : 'none';
-  if (this.value === 'no') document.getElementById('clientDebt').value = '';
-});
-
-document.getElementById('storeDebtType').addEventListener('change', function() {
-  document.getElementById('storeDebt').style.display = this.value === 'yes' ? 'block' : 'none';
-  if (this.value === 'no') document.getElementById('storeDebt').value = '';
-});
-
 function openModal() {
   document.getElementById('modalTitle').textContent = 'Нове замовлення';
   document.getElementById('editId').value = '';
@@ -1355,17 +1013,11 @@ function openModal() {
   document.getElementById('clientName').value = '';
   document.getElementById('clientPhone').value = '+380';
   document.getElementById('address').value = '';
-  document.getElementById('status').value = 'working';
+  document.getElementById('status').value = 'client';
   document.getElementById('manufacturer').value = '';
   document.getElementById('quantity').value = '1';
   document.getElementById('price').value = '';
   document.getElementById('store').value = '';
-  document.getElementById('clientDebtType').value = 'no';
-  document.getElementById('clientDebt').value = '';
-  document.getElementById('clientDebt').style.display = 'none';
-  document.getElementById('storeDebtType').value = 'no';
-  document.getElementById('storeDebt').value = '';
-  document.getElementById('storeDebt').style.display = 'none';
   document.getElementById('notes').value = '';
   
   document.getElementById('modal').classList.add('show');
@@ -1389,17 +1041,6 @@ function editOrder(id) {
   document.getElementById('quantity').value = order.quantity;
   document.getElementById('price').value = order.price;
   document.getElementById('store').value = order.store || '';
-  
-  var hasClientDebt = order.clientDebt && parseFloat(order.clientDebt) > 0;
-  document.getElementById('clientDebtType').value = hasClientDebt ? 'yes' : 'no';
-  document.getElementById('clientDebt').value = order.clientDebt || '';
-  document.getElementById('clientDebt').style.display = hasClientDebt ? 'block' : 'none';
-  
-  var hasStoreDebt = order.storeDebt && parseFloat(order.storeDebt) > 0;
-  document.getElementById('storeDebtType').value = hasStoreDebt ? 'yes' : 'no';
-  document.getElementById('storeDebt').value = order.storeDebt || '';
-  document.getElementById('storeDebt').style.display = hasStoreDebt ? 'block' : 'none';
-  
   document.getElementById('notes').value = order.notes || '';
   
   document.getElementById('modal').classList.add('show');
@@ -1421,8 +1062,6 @@ function saveOrder() {
   var quantity = document.getElementById('quantity').value;
   var price = document.getElementById('price').value;
   var store = document.getElementById('store').value;
-  var clientDebt = document.getElementById('clientDebtType').value === 'yes' ? document.getElementById('clientDebt').value : '';
-  var storeDebt = document.getElementById('storeDebtType').value === 'yes' ? document.getElementById('storeDebt').value : '';
   var notes = document.getElementById('notes').value;
   
   if (!date || !clientName || !clientPhone || !address) {
@@ -1441,8 +1080,6 @@ function saveOrder() {
     quantity: quantity,
     price: price,
     store: store,
-    clientDebt: clientDebt,
-    storeDebt: storeDebt,
     notes: notes
   };
   
@@ -1480,15 +1117,7 @@ function preparePrintData() {
   var filtered = [];
   var displayText = '';
   
-  if (viewMode === 'calendar') {
-    var year = currentDate.getFullYear();
-    var month = currentDate.getMonth();
-    filtered = orders.filter(function(o) {
-      var d = new Date(o.date);
-      return d.getMonth() === month && d.getFullYear() === year;
-    });
-    displayText = monthNames[month] + ' ' + year;
-  } else if (viewMode === 'day') {
+  if (viewMode === 'day') {
     var dayStr = formatDateKey(currentDate);
     filtered = orders.filter(function(o) { return o.date === dayStr; });
     displayText = formatDateFull(currentDate);
@@ -1512,8 +1141,14 @@ function preparePrintData() {
     displayText = monthNames[month] + ' ' + year;
   }
   
+  var totalRev = 0;
+  filtered.forEach(function(o) {
+    totalRev += parseFloat(o.price || 0) * parseInt(o.quantity || 1);
+  });
+  
   document.getElementById('p_period').textContent = displayText;
   document.getElementById('p_orders').textContent = filtered.length;
+  document.getElementById('p_revenue').textContent = Math.round(totalRev).toLocaleString('uk-UA');
   
   var tbody = '';
   filtered.sort(function(a, b) {
@@ -1522,7 +1157,7 @@ function preparePrintData() {
   });
   
   filtered.forEach(function(o) {
-    var statusText = getStatusText(o.status);
+    var statusText = o.status === 'client' ? 'В клієнта' : o.status === 'repair' ? 'Поправка' : 'Доставка';
     tbody += '<tr>';
     tbody += '<td>' + o.date + '</td>';
     tbody += '<td>' + o.time + '</td>';
@@ -1532,6 +1167,7 @@ function preparePrintData() {
     tbody += '<td>' + statusText + '</td>';
     tbody += '<td>' + (o.manufacturer || '—') + '</td>';
     tbody += '<td>' + o.quantity + '</td>';
+    tbody += '<td>' + (o.price || 0) + '</td>';
     tbody += '<td>' + (o.store || '—') + '</td>';
     tbody += '</tr>';
   });
@@ -1560,14 +1196,7 @@ function shareData() {
   var text = 'Графік монтажів\n\n';
   var filtered = [];
   
-  if (viewMode === 'calendar') {
-    var year = currentDate.getFullYear();
-    var month = currentDate.getMonth();
-    filtered = orders.filter(function(o) {
-      var d = new Date(o.date);
-      return d.getMonth() === month && d.getFullYear() === year;
-    });
-  } else if (viewMode === 'day') {
+  if (viewMode === 'day') {
     var dayStr = formatDateKey(currentDate);
     filtered = orders.filter(function(o) { return o.date === dayStr; });
   } else if (viewMode === 'week') {
