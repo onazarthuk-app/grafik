@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!OCTYPE html>''
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
@@ -265,20 +265,20 @@ body { padding-bottom: 90px; }
 /* ─── STATS ─── */
 .stats-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 14px;
-  margin-bottom: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* менші блоки */
+  gap: 10px;
+  margin-bottom: 16px; /* було 28 */
 }
 
 .stat {
   background: var(--dark2);
   border: 1px solid var(--dark4);
   border-radius: var(--r2);
-  padding: 20px 22px;
-  position: relative;
-  overflow: hidden;
-  transition: transform var(--trans);
+  padding: 12px 14px; /* було 20px 22px */
 }
+.stat-ico { font-size: 20px; margin-bottom: 6px; }
+.stat-lbl { font-size: 10px; margin-bottom: 2px; }
+.stat-val { font-size: 22px; }
 
 .stat:hover { transform: translateY(-4px); }
 
