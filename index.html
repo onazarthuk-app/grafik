@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#07070a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>MontazhPro — Монтаж дверей</title>
+<title>Е-монтаж — Графік роботи</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -17,7 +17,7 @@
 :root{
   --bg0:#07070a; --bg1:#0f0f14; --bg2:#16161d; --bg3:#1e1e27; --bg4:#252531;
   --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.12);
-  --accent:#7c5cfc; --accent2:#9b7ffe; --glow:rgba(124,92,252,.25);
+  --accent:#e11d2e; --accent2:#ff4b5c; --glow:rgba(225,29,46,.24);
   --green:#22c55e; --amber:#f59e0b; --rose:#f43f5e; --sky:#38bdf8; --orange:#fb923c;
   --text:#f1f0fb; --muted:#6b6b82; --muted2:#45455a;
   --r:10px; --r2:14px; --r3:20px; --t:.22s cubic-bezier(.4,0,.2,1);
@@ -25,12 +25,12 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;background:var(--bg0);font-family:'Inter',system-ui,sans-serif;color:var(--text);overflow-x:hidden}
 body{padding-bottom:88px}
-::selection{background:rgba(124,92,252,.3)}
+::selection{background:rgba(225,29,46,.28)}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
 
 /* ── AUTH ── */
-.auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(124,92,252,.18) 0%,transparent 60%),var(--bg0)}
-.auth-card{width:100%;max-width:400px;background:var(--bg1);border:1px solid var(--border2);border-radius:var(--r3);padding:44px 36px;box-shadow:0 0 0 1px rgba(124,92,252,.08),0 32px 64px rgba(0,0,0,.5);animation:fadeUp .45s ease}
+.auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(225,29,46,.16) 0%,transparent 60%),var(--bg0)}
+.auth-card{width:100%;max-width:400px;background:var(--bg1);border:1px solid var(--border2);border-radius:var(--r3);padding:44px 36px;box-shadow:0 0 0 1px rgba(225,29,46,.08),0 32px 64px rgba(0,0,0,.5);animation:fadeUp .45s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 .auth-brand{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:32px}
 .auth-brand-mark{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px var(--glow)}
@@ -41,9 +41,9 @@ body{padding-bottom:88px}
 .fl{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
 .fl label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
 .f-in{width:100%;padding:11px 14px;background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r);color:var(--text);font-size:14px;font-family:inherit;transition:border-color var(--t),box-shadow var(--t)}
-.f-in:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(124,92,252,.12)}
-.auth-btn{width:100%;margin-top:6px;padding:12px;background:linear-gradient(135deg,var(--accent) 0%,#9b7ffe 100%);border:none;border-radius:var(--r);color:#fff;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px var(--glow);transition:all var(--t)}
-.auth-btn:hover{transform:translateY(-1px);box-shadow:0 12px 32px rgba(124,92,252,.4)}
+.f-in:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(225,29,46,.12)}
+.auth-btn{width:100%;margin-top:6px;padding:12px;background:linear-gradient(135deg,var(--accent) 0%,#ff4b5c 100%);border:none;border-radius:var(--r);color:#fff;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px var(--glow);transition:all var(--t)}
+.auth-btn:hover{transform:translateY(-1px);box-shadow:0 12px 32px rgba(225,29,46,.36)}
 .auth-switch{text-align:center;margin-top:20px;font-size:13px;color:var(--muted)}
 .auth-switch a{color:var(--accent2);cursor:pointer;font-weight:600}
 
@@ -51,7 +51,7 @@ body{padding-bottom:88px}
 .navbar{position:fixed;top:0;left:0;right:0;z-index:300;height:56px;background:rgba(7,7,10,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:2px}
 .nav-brand{display:flex;align-items:center;gap:8px;margin-right:12px;text-decoration:none;flex-shrink:0}
 .nav-brand-dot{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px var(--glow);animation:logoPulse 3s ease-in-out infinite}
-@keyframes logoPulse{0%,100%{box-shadow:0 4px 12px rgba(124,92,252,.3)}50%{box-shadow:0 4px 20px rgba(124,92,252,.6)}}
+@keyframes logoPulse{0%,100%{box-shadow:0 4px 12px rgba(225,29,46,.28)}50%{box-shadow:0 4px 20px rgba(225,29,46,.56)}}
 .nav-brand-text{font-size:15px;font-weight:800;letter-spacing:-.4px}
 .nav-brand-text b{color:var(--accent2)}
 .nav-items{display:flex;align-items:center;gap:1px;flex:1;overflow-x:auto;scrollbar-width:none}
@@ -59,7 +59,7 @@ body{padding-bottom:88px}
 .nav-item{display:flex;align-items:center;gap:5px;padding:6px 10px;border:none;background:transparent;border-radius:8px;color:var(--muted);font-size:12px;font-weight:500;cursor:pointer;transition:all var(--t);white-space:nowrap;font-family:inherit;flex-shrink:0}
 .nav-item svg{width:14px;height:14px}
 .nav-item:hover{background:var(--bg3);color:var(--text)}
-.nav-item.active{background:rgba(124,92,252,.15);color:var(--accent2)}
+.nav-item.active{background:rgba(225,29,46,.14);color:var(--accent2)}
 .nav-sep{width:1px;height:18px;background:var(--border);margin:0 6px;flex-shrink:0}
 .nav-right{display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0}
 .nav-icon-btn{width:32px;height:32px;border-radius:8px;background:transparent;border:1px solid var(--border);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--t);position:relative}
@@ -190,7 +190,7 @@ body{padding-bottom:88px}
 .empty-state svg{width:56px;height:56px;opacity:.25;margin:0 auto 14px;display:block}
 .empty-state p{font-size:16px;margin-bottom:22px}
 .btn-primary{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;background:var(--accent);border:none;border-radius:var(--r);color:#fff;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px var(--glow);transition:all var(--t);font-family:inherit}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(124,92,252,.45)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(225,29,46,.40)}
 
 /* ── TODAY ROUTE ── */
 .route-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:18px;margin-bottom:16px}
@@ -234,11 +234,11 @@ body{padding-bottom:88px}
 .settings-item-desc{font-size:11px;color:var(--muted);margin-top:1px}
 .tag-list{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
 .tag{padding:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;transition:all var(--t);display:flex;align-items:center;gap:5px}
-.tag.active{background:rgba(124,92,252,.15);border-color:var(--accent);color:var(--accent2)}
+.tag.active{background:rgba(225,29,46,.14);border-color:var(--accent);color:var(--accent2)}
 .inp-tag{padding:7px 11px;background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r);color:var(--text);font-size:13px;font-family:inherit;width:190px}
 .inp-tag:focus{outline:none;border-color:var(--accent)}
-.btn-sm{padding:7px 12px;border-radius:var(--r);border:1px solid var(--accent);background:rgba(124,92,252,.12);color:var(--accent2);font-size:12px;font-weight:700;cursor:pointer;transition:all var(--t);font-family:inherit}
-.btn-sm:hover{background:rgba(124,92,252,.2)}
+.btn-sm{padding:7px 12px;border-radius:var(--r);border:1px solid var(--accent);background:rgba(225,29,46,.12);color:var(--accent2);font-size:12px;font-weight:700;cursor:pointer;transition:all var(--t);font-family:inherit}
+.btn-sm:hover{background:rgba(225,29,46,.18)}
 
 /* ── BOTTOM NAV ── */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(7,7,10,.97);backdrop-filter:blur(24px);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;padding:8px 8px calc(8px + env(safe-area-inset-bottom))}
@@ -270,7 +270,7 @@ body{padding-bottom:88px}
 .f-sel,.f-area{width:100%;padding:10px 13px;background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r);color:var(--text);font-size:13px;font-family:inherit;transition:border-color var(--t),box-shadow var(--t)}
 .f-sel{cursor:pointer}
 .f-sel option{background:var(--bg2)}
-.f-sel:focus,.f-area:focus,.f-in:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(124,92,252,.1)}
+.f-sel:focus,.f-area:focus,.f-in:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(225,29,46,.10)}
 .f-area{resize:vertical;min-height:70px}
 
 .section-divider{margin:16px 0 13px;padding-bottom:8px;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;display:flex;align-items:center;gap:6px}
@@ -280,7 +280,7 @@ body{padding-bottom:88px}
 .check-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:13px}
 .chk-item{display:flex;align-items:center;gap:5px;padding:6px 11px;background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;font-size:12px;font-weight:600;transition:all var(--t)}
 .chk-item:hover{border-color:var(--border2)}
-.chk-item.checked{background:rgba(124,92,252,.1);border-color:var(--accent);color:var(--accent2)}
+.chk-item.checked{background:rgba(225,29,46,.10);border-color:var(--accent);color:var(--accent2)}
 .chk-item input{display:none}
 .chk-item svg{width:13px;height:13px}
 
@@ -319,7 +319,7 @@ body{padding-bottom:88px}
 
 /* ── PDF ── */
 #pdf-tpl{position:absolute;left:-9999px;top:0;width:1160px;font-family:'Inter',Arial,sans-serif;background:#fff;padding:30px 34px;color:#111}
-#pdf-tpl .ph{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:18px;padding-bottom:14px;border-bottom:3px solid #7c5cfc}
+#pdf-tpl .ph{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:18px;padding-bottom:14px;border-bottom:3px solid #e11d2e}
 #pdf-tpl .pt{font-size:20px;font-weight:900;letter-spacing:-.5px;color:#0f0f14}
 #pdf-tpl .pm{font-size:11px;color:#666;text-align:right;line-height:1.7}
 #pdf-tpl .ps{display:flex;gap:12px;margin-bottom:20px}
@@ -327,7 +327,7 @@ body{padding-bottom:88px}
 #pdf-tpl .pscv{font-size:20px;font-weight:900;color:#0f0f14}
 #pdf-tpl .pscl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-top:2px}
 #pdf-tpl table{width:100%;border-collapse:collapse;font-size:10.5px}
-#pdf-tpl thead tr{background:#0f0f14;color:#9b7ffe}
+#pdf-tpl thead tr{background:#0f0f14;color:#ff4b5c}
 #pdf-tpl thead th{padding:9px 8px;text-align:left;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:9px;white-space:nowrap}
 #pdf-tpl tbody tr{border-bottom:1px solid #eee}
 #pdf-tpl tbody tr:nth-child(even){background:#f9f9fc}
@@ -343,6 +343,97 @@ body{padding-bottom:88px}
 #pdf-tpl .pp-partial{background:#fef3c7;color:#92400e}
 #pdf-tpl .pp-unpaid{background:#fee2e2;color:#991b1b}
 #pdf-tpl .pf{margin-top:18px;padding-top:10px;border-top:1px solid #e5e7eb;display:flex;justify-content:space-between;font-size:9px;color:#aaa}
+
+
+
+/* ── PROFESSIONAL POLISH: E-МОНТАЖ ── */
+body{
+  background:
+    radial-gradient(circle at 15% 0%,rgba(225,29,46,.13),transparent 32%),
+    radial-gradient(circle at 85% 8%,rgba(56,189,248,.08),transparent 28%),
+    linear-gradient(180deg,#08090d 0%,#101116 45%,#08090d 100%);
+}
+.auth-card,.cal-card,.route-card,.a-card,.settings-item,.ocard,.modal-box{
+  box-shadow:0 18px 50px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.035);
+}
+.navbar{
+  height:60px;
+  background:rgba(8,9,13,.88);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  box-shadow:0 10px 35px rgba(0,0,0,.28);
+}
+.nav-brand-dot,.auth-brand-mark{
+  border-radius:11px;
+  background:linear-gradient(135deg,#e11d2e 0%,#ff4b5c 55%,#9f1239 100%);
+}
+.nav-brand-text,.auth-brand-name{letter-spacing:-.7px}
+.nav-item,.view-tab,.bn{border-radius:12px}
+.nav-item.active,.view-tab.on{
+  background:linear-gradient(180deg,rgba(225,29,46,.18),rgba(225,29,46,.08));
+  border-color:rgba(225,29,46,.22);
+}
+.panel{max-width:1280px;padding:24px}
+.period-bar{
+  background:rgba(255,255,255,.025);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:10px;
+  width:max-content;
+  max-width:100%;
+  margin-left:auto;
+  margin-right:auto;
+}
+.period-label{font-size:17px}
+.stats-strip{gap:10px}
+.stat-chip{
+  border-radius:18px;
+  padding:14px 16px;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018));
+}
+.stat-chip-val{font-size:21px}
+.cal-card,.route-card,.a-card{border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018))}
+.ocard{
+  border-radius:18px;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.02));
+}
+.ocard:hover{transform:translateY(-2px);box-shadow:0 18px 45px rgba(0,0,0,.34)}
+.ocard::before{width:4px}
+.ocard-time{font-size:22px}
+.ocard-field{border:1px solid rgba(255,255,255,.05)}
+.f-in,.f-sel,.f-area,.inp-tag{
+  min-height:44px;
+  border-radius:13px;
+  background:rgba(255,255,255,.045);
+}
+.f-area{min-height:84px}
+.modal-box{max-width:640px;border-radius:24px;background:linear-gradient(180deg,#181922,#101116)}
+.modal-title{font-size:22px}
+.modal-btns{gap:12px}
+.m-btn,.btn-primary,.btn-sm,.auth-btn{
+  border-radius:14px;
+  min-height:42px;
+}
+.m-save,.btn-primary,.auth-btn,.bn-add{
+  background:linear-gradient(135deg,#e11d2e 0%,#ff4b5c 100%)!important;
+}
+.bottom-nav{
+  background:rgba(8,9,13,.92);
+  box-shadow:0 -10px 35px rgba(0,0,0,.3);
+}
+.empty-state{
+  background:rgba(255,255,255,.025);
+  border:1px dashed rgba(255,255,255,.09);
+  border-radius:22px;
+}
+.search-bar{border-radius:18px;background:rgba(255,255,255,.04)}
+@media(max-width:768px){
+  .panel{padding:16px}
+  .navbar{height:56px}
+  #panel-schedule,#panel-route,#panel-analytics,#panel-search,#panel-settings{margin-top:56px!important}
+  .period-bar{width:100%;justify-content:space-between}
+  .stat-chip{min-width:calc(50% - 5px)}
+  .modal-title{font-size:19px}
+}
 
 @media(max-width:768px){
   .navbar .nav-items .nav-item span{display:none}
@@ -365,10 +456,10 @@ body{padding-bottom:88px}
           <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
         </svg>
       </div>
-      <div class="auth-brand-name">Montazh<span>Pro</span></div>
+      <div class="auth-brand-name">Е-<span>монтаж</span></div>
     </div>
     <div class="auth-title">Ласкаво просимо</div>
-    <div class="auth-sub" id="auth-sub">Система управління монтажем дверей</div>
+    <div class="auth-sub" id="auth-sub">Система управління графіком роботи</div>
     <div class="fl"><label>Електронна пошта</label><input type="email" id="aEmail" class="f-in" placeholder="name@company.com"></div>
     <div class="fl"><label>Пароль</label><input type="password" id="aPass" class="f-in" placeholder="Мінімум 6 символів"></div>
     <button id="aSubmit" class="auth-btn">Увійти в систему</button>
@@ -386,7 +477,7 @@ body{padding-bottom:88px}
           <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
         </svg>
       </div>
-      <div class="nav-brand-text">Montazh<b>Pro</b></div>
+      <div class="nav-brand-text">Е-<b>монтаж</b></div>
     </a>
 
     <div class="nav-items">
@@ -695,7 +786,7 @@ body{padding-bottom:88px}
 <!-- PDF TEMPLATE -->
 <div id="pdf-tpl">
   <div class="ph">
-    <div><div class="pt">MontazhPro — Монтаж дверей</div><div id="pdfSub" style="font-size:12px;color:#666;margin-top:3px"></div></div>
+    <div><div class="pt">Е-монтаж — Графік роботи</div><div id="pdfSub" style="font-size:12px;color:#666;margin-top:3px"></div></div>
     <div class="pm" id="pdfMeta"></div>
   </div>
   <div class="ps" id="pdfStats"></div>
@@ -721,7 +812,7 @@ body{padding-bottom:88px}
     </thead>
     <tbody id="pdfBody"></tbody>
   </table>
-  <div class="pf"><span>MontazhPro — автоматична генерація</span><span id="pdfDate"></span></div>
+  <div class="pf"><span>Е-монтаж — автоматична генерація</span><span id="pdfDate"></span></div>
 </div>
 
 <div id="toast" class="toast"></div>
@@ -759,7 +850,7 @@ function toggleReg(){
   document.getElementById('aSubmit').textContent=isReg?'Зареєструватись':'Увійти в систему';
   document.getElementById('aSwitchTxt').textContent=isReg?'Вже є акаунт? ':'Немає акаунту? ';
   document.getElementById('aSwitch').textContent=isReg?'Увійти':'Зареєструватись';
-  document.getElementById('auth-sub').textContent=isReg?'Створіть новий акаунт':'Система управління монтажем дверей';
+  document.getElementById('auth-sub').textContent=isReg?'Створіть новий акаунт':'Система управління графіком роботи';
 }
 function doAuth(){
   const e=document.getElementById('aEmail').value.trim(), p=document.getElementById('aPass').value;
@@ -884,7 +975,7 @@ function updatePeriodLabel(){
 }
 
 // ── STATS ──
-const ST_CLR={client:'rgba(124,92,252,.2)',delivery:'rgba(56,189,248,.15)',repair:'rgba(245,158,11,.15)',done:'rgba(34,197,94,.18)',waiting:'rgba(244,63,94,.12)',cancelled:'rgba(107,107,130,.15)'};
+const ST_CLR={client:'rgba(225,29,46,.18)',delivery:'rgba(56,189,248,.15)',repair:'rgba(245,158,11,.15)',done:'rgba(34,197,94,.18)',waiting:'rgba(244,63,94,.12)',cancelled:'rgba(107,107,130,.15)'};
 const ST_TC={client:'var(--accent2)',delivery:'var(--sky)',repair:'var(--amber)',done:'var(--green)',waiting:'var(--rose)',cancelled:'var(--muted)'};
 
 function renderStats(list){
@@ -894,7 +985,7 @@ function renderStats(list){
   const sc={client:0,delivery:0,repair:0,done:0,waiting:0,cancelled:0};
   list.forEach(o=>{if(sc[o.status]!=null)sc[o.status]++});
   const chips=[
-    {ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',clr:'rgba(124,92,252,.2)',tc:'var(--accent2)',lbl:'Замовлень',val:list.length},
+    {ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',clr:'rgba(225,29,46,.18)',tc:'var(--accent2)',lbl:'Замовлень',val:list.length},
     {ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',clr:'rgba(34,197,94,.15)',tc:'var(--green)',lbl:'Сума грн',val:Math.round(rev).toLocaleString('uk-UA')},
     {ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',clr:'rgba(244,63,94,.12)',tc:'var(--rose)',lbl:'Борг грн',val:Math.round(debt).toLocaleString('uk-UA')},
     {ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',clr:'rgba(34,197,94,.15)',tc:'var(--green)',lbl:'Виконано',val:sc.done},
