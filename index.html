@@ -605,37 +605,15 @@ body{padding-bottom:88px}
     <input type="hidden" id="fFloor" value="">
     <select id="fElevator" style="display:none"><option value="unknown">Невідомо</option><option value="yes">Є</option><option value="no">Немає</option></select>
 
-    <!-- Двері -->
-    <div class="fg-row fg">
-      <div class="fg"><label>Тип дверей</label>
-        <select id="fDoorType" class="f-sel">
-          <option value="">— оберіть —</option>
-          <option value="Вхідні">Вхідні</option>
-          <option value="Міжкімнатні">Міжкімнатні</option>
-          <option value="Балконні">Балконні</option>
-          <option value="Технічні">Технічні</option>
-          <option value="Протипожежні">Протипожежні</option>
-          <option value="Бронедвері">Бронедвері</option>
-        </select>
-      </div>
-      <div class="fg"><label>Матеріал</label>
-        <select id="fMaterial" class="f-sel">
-          <option value="">— оберіть —</option>
-          <option value="Металеві">Металеві</option>
-          <option value="Дерев'яні">Дерев'яні</option>
-          <option value="МДФ">МДФ</option>
-          <option value="Скляні">Скляні</option>
-          <option value="Ламіновані">Ламіновані</option>
-          <option value="Металопластик">Металопластик</option>
-        </select>
-      </div>
-    </div>
-    <div class="fg"><label>Виробник / Модель / Артикул</label><input type="text" id="fManuf" class="f-in" placeholder="Наприклад: Steelguard Форт, арт. 1234"></div>
+    <!-- Двері: зайві поля сховані для чистої заявки -->
+    <input type="hidden" id="fDoorType" value="">
+    <input type="hidden" id="fMaterial" value="">
+    <div class="fg"><label>Що встановлюємо / модель</label><input type="text" id="fManuf" class="f-in" placeholder="Наприклад: вхідні двері Steelguard або № замовлення"></div>
     <input type="hidden" id="fWidth" value="">
     <input type="hidden" id="fHeight" value="">
     <div class="fg"><label>К-сть дверей</label><input type="number" id="fQty" class="f-in" value="1" min="1"></div>
     <input type="hidden" id="fSide" value="">
-    <div class="fg"><label>Колір / Покриття</label><input type="text" id="fColor" class="f-in" placeholder="Венге, білий, горіх..."></div>
+    <input type="hidden" id="fColor" value="">
 
     <!-- Роботи прибрано з короткої заявки -->
     <div id="worksCheckRow" style="display:none"></div>
@@ -654,7 +632,7 @@ body{padding-bottom:88px}
       <div class="fg"><label>Монтажник 1</label><select id="fWorker1" class="f-sel"><option value="">— оберіть —</option></select></div>
       <div class="fg"><label>Монтажник 2</label><select id="fWorker2" class="f-sel"><option value="">— оберіть —</option></select></div>
     </div>
-    <div class="fg"><label>Орієнт. тривалість (год)</label><input type="number" id="fDuration" class="f-in" placeholder="2" min="0.5" max="12" step="0.5"></div>
+    <input type="hidden" id="fDuration" value="">
     <input type="hidden" id="fVehicle" value="">
 
     <!-- Оплата -->
@@ -670,41 +648,36 @@ body{padding-bottom:88px}
           <option value="Готівка">Готівка</option>
           <option value="Картка">Картка</option>
           <option value="Безготівкова">Безготівкова</option>
-          <option value="Змішана">Змішана</option>
+          <option value="Оплачено в магазині">Оплачено в магазині</option>
         </select>
       </div>
     </div>
-    <div class="fg-row fg">
-      <div class="fg"><label>Статус замовлення</label>
-        <select id="fStatus" class="f-sel">
-          <option value="client">Заплановано</option>
-          <option value="delivery">В дорозі / Доставка</option>
-          <option value="repair">Монтаж (поправка)</option>
-          <option value="done">Виконано</option>
-          <option value="waiting">Очікує оплати</option>
-          <option value="cancelled">Скасовано</option>
-        </select>
-      </div>
-      <div class="fg"><label>Гарантія</label>
-        <select id="fWarranty" class="f-sel">
-          <option value="">Без гарантії</option>
-          <option value="3 місяці">3 місяці</option>
-          <option value="6 місяців">6 місяців</option>
-          <option value="1 рік">1 рік</option>
-          <option value="2 роки">2 роки</option>
-          <option value="3 роки">3 роки</option>
-          <option value="5 років">5 років</option>
-        </select>
-      </div>
+    <div class="fg">
+      <label>Статус замовлення</label>
+      <select id="fStatus" class="f-sel">
+        <option value="client">Заплановано</option>
+        <option value="delivery">В дорозі / Доставка</option>
+        <option value="repair">Монтаж (поправка)</option>
+        <option value="done">Виконано</option>
+        <option value="waiting">Очікує оплати</option>
+        <option value="cancelled">Скасовано</option>
+      </select>
     </div>
+    <input type="hidden" id="fWarranty" value="">
 
     <!-- Нотатки -->
     <div class="section-divider">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
-      Примітки та матеріали
+      Примітки
     </div>
-    <div class="fg"><label>Нотатки (особливості, побажання)</label><textarea id="fNotes" class="f-area" placeholder="Складний проріз, прибрати підлогу, клієнт вдома після 15:00..."></textarea></div>
-    <div class="fg"><label>Список матеріалів (що взяти)</label><textarea id="fMaterials" class="f-area" style="min-height:55px" placeholder="Монтажна піна 2шт, дюбелі 8х100 20шт, лиштва 3м..."></textarea></div>
+    <div class="fg"><label>Примітка для бригади</label><textarea id="fNotes" class="f-area" placeholder="Наприклад: клієнт вдома після 15:00, дзвонити за 30 хв, складний підʼїзд..."></textarea></div>
+    <div class="tag-list" style="margin:-4px 0 12px">
+      <button type="button" class="tag" onclick="quickNote('Дзвонити за 30 хв')">Дзвонити за 30 хв</button>
+      <button type="button" class="tag" onclick="quickNote('Клієнт чекає після 15:00')">Після 15:00</button>
+      <button type="button" class="tag" onclick="quickNote('Потрібен перфоратор')">Перфоратор</button>
+      <button type="button" class="tag" onclick="quickNote('Складний підʼїзд / парковка')">Парковка</button>
+    </div>
+    <textarea id="fMaterials" style="display:none"></textarea>
 
     <div class="modal-btns">
       <button class="m-btn m-cancel" onclick="closeModal()">Скасувати</button>
@@ -730,7 +703,6 @@ body{padding-bottom:88px}
         <th style="width:100px">Телефон</th>
         <th style="width:150px">Адреса</th>
         <th style="width:65px">Статус</th>
-        <th style="width:80px">Тип дверей</th>
         <th style="width:80px">Виробник</th>
         <th style="width:60px">Розмір</th>
         <th style="width:90px">Роботи</th>
@@ -740,7 +712,6 @@ body{padding-bottom:88px}
         <th style="width:55px">Сума</th>
         <th style="width:55px">Передплата</th>
         <th style="width:55px">Борг</th>
-        <th style="width:55px">Гарантія</th>
       </tr>
     </thead>
     <tbody id="pdfBody"></tbody>
@@ -1012,7 +983,6 @@ function cardHTML(o){
     <div class="ocard-top">
       <div class="ocard-time-block">
         <div class="ocard-time">${o.time}</div>
-        ${o.duration?`<div class="ocard-dur">${o.duration}год</div>`:''}
       </div>
       <div class="badges">
         ${o.priority&&o.priority!=='normal'?`<div class="badge b-prio-${o.priority}">${prioMap[o.priority]}</div>`:''}
@@ -1032,7 +1002,6 @@ function cardHTML(o){
     </div>
     <div class="ocard-row">
       <div class="ocard-field"><div class="of-lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 11.5a19.79 19.79 0 01-3.07-8.67A2 2 0 012.88 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Телефон</div><div class="of-val"><a href="tel:${o.clientPhone}" style="color:inherit;text-decoration:none">${o.clientPhone}</a>${o.clientPhone2?`<br><a href="tel:${o.clientPhone2}" style="color:var(--muted);text-decoration:none;font-size:11px">${o.clientPhone2}</a>`:''}</div></div>
-      ${o.doorType?`<div class="ocard-field"><div class="of-lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Тип дверей</div><div class="of-val">${o.doorType}${o.material?' / '+o.material:''}</div></div>`:''}
       ${o.manufacturer?`<div class="ocard-field"><div class="of-lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>Виробник</div><div class="of-val">${o.manufacturer}</div></div>`:''}
       ${size?`<div class="ocard-field"><div class="of-lbl">Розмір (мм)</div><div class="of-val">${size}${o.doorSide?' / '+o.doorSide:''}</div></div>`:''}
       ${o.manager?`<div class="ocard-field"><div class="of-lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Менеджер</div><div class="of-val">${o.manager}</div></div>`:''}
@@ -1046,9 +1015,7 @@ function cardHTML(o){
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
       ${o.address}${o.floor?' ('+o.floor+' пов.)':''}
     </div>
-    ${o.materials?`<div class="ocard-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1" ry="1"/></svg>Матеріали: ${o.materials}</div>`:''}
     ${o.notes?`<div class="ocard-note" style="margin-top:6px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>${o.notes}</div>`:''}
-    ${o.warranty?`<div class="ocard-note" style="margin-top:6px;background:rgba(56,189,248,.06);border-color:var(--sky)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--sky)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Гарантія: ${o.warranty}</div>`:''}
   </div>`;
 }
 
@@ -1256,6 +1223,14 @@ function toggleChk(label){
   const input=label.querySelector('input'); if(input) input.checked=label.classList.contains('checked');
 }
 
+function quickNote(text){
+  const el=document.getElementById('fNotes');
+  if(!el) return;
+  const cur=el.value.trim();
+  el.value=cur ? cur + '; ' + text : text;
+  el.focus();
+}
+
 // ── MODAL ──
 function openModal(){
   document.getElementById('modalTitle').textContent='Нове замовлення';
@@ -1420,7 +1395,6 @@ function buildPdf(){
       <td>${o.clientPhone}</td>
       <td style="word-break:break-word">${o.address}${o.floor?' ('+o.floor+' пов.)':''}</td>
       <td><span class="ps-c ${stCls[o.status]||'sc-client'}">${stMap[o.status]||o.status}</span></td>
-      <td>${o.doorType||'—'}${o.material?' / '+o.material:''}</td>
       <td>${o.manufacturer||'—'}</td>
       <td>${size}${o.doorSide?' / '+o.doorSide:''}</td>
       <td style="font-size:10px">${(o.works||[]).join(', ')||'—'}</td>
@@ -1430,7 +1404,6 @@ function buildPdf(){
       <td style="text-align:right"><b>${(+o.price||0).toLocaleString('uk-UA')}</b></td>
       <td style="text-align:right">${(+o.prepay||0).toLocaleString('uk-UA')}</td>
       <td style="text-align:right"><span class="ps-c ${pCls}">${debt>0?debt.toLocaleString('uk-UA'):0}</span></td>
-      <td>${o.warranty||'—'}</td>
     </tr>`;
   }).join('');
 }
