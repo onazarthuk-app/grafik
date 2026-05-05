@@ -507,6 +507,11 @@ body{padding-bottom:88px}
       <div style="display:flex;gap:7px;margin-top:10px"><input class="inp-tag" id="newStoreIn" placeholder="Назва магазину..."><button class="btn-sm" onclick="addStore()">+ Додати</button></div>
     </div>
     <div class="settings-section">
+      <div class="settings-title">Виробники / Моделі</div>
+      <div id="manufacturerTags" class="tag-list"></div>
+      <div style="display:flex;gap:7px;margin-top:10px"><input class="inp-tag" id="newManufacturerIn" placeholder="Назва виробника або модель..."><button class="btn-sm" onclick="addManufacturer()">+ Додати</button></div>
+    </div>
+    <div class="settings-section">
       <div class="settings-title">Монтажники / Бригади</div>
       <div id="workerTags" class="tag-list"></div>
       <div style="display:flex;gap:7px;margin-top:10px"><input class="inp-tag" id="newWorkerIn" placeholder="Ім'я монтажника..."><button class="btn-sm" onclick="addWorker()">+ Додати</button></div>
@@ -608,7 +613,7 @@ body{padding-bottom:88px}
     <!-- Двері: зайві поля сховані для чистої заявки -->
     <input type="hidden" id="fDoorType" value="">
     <input type="hidden" id="fMaterial" value="">
-    <div class="fg"><label>Що встановлюємо / модель</label><input type="text" id="fManuf" class="f-in" placeholder="Наприклад: вхідні двері Steelguard або № замовлення"></div>
+    <div class="fg"><label>Виробник *</label><select id="fManuf" class="f-sel"><option value="">— оберіть —</option></select></div>
     <input type="hidden" id="fWidth" value="">
     <input type="hidden" id="fHeight" value="">
     <div class="fg"><label>К-сть дверей</label><input type="number" id="fQty" class="f-in" value="1" min="1"></div>
@@ -739,6 +744,7 @@ const auth=firebase.auth(), db=firebase.database();
 let orders=[], current=new Date(), view='day', uid=null, isReg=false;
 let MANAGERS=['Іван Коваленко','Петро Мельник','Марія Бондар','Олена Ткаченко'];
 let STORES=['Львів — Центр','Львів — Нижній','Тернопіль','Кривий Ріг'];
+let MANUFACTURERS=['Термопласт','Страж','Новий Стиль','Булат','Steelguard','Портала','Ваші двері'];
 let WORKERS=['Василь','Микола','Олег','Дмитро','Сергій'];
 
 const MONTHS=['Січня','Лютого','Березня','Квітня','Травня','Червня','Липня','Серпня','Вересня','Жовтня','Листопада','Грудня'];
@@ -788,22 +794,25 @@ function loadAll(){
   });
   db.ref('users/'+uid+'/managers').on('value',s=>{ if(s.exists()) MANAGERS=s.val(); populateSelects(); renderSettings(); });
   db.ref('users/'+uid+'/stores').on('value',s=>{ if(s.exists()) STORES=s.val(); populateSelects(); renderSettings(); });
+  db.ref('users/'+uid+'/manufacturers').on('value',s=>{ if(s.exists()) MANUFACTURERS=s.val(); populateSelects(); renderSettings(); });
   db.ref('users/'+uid+'/workers').on('value',s=>{ if(s.exists()) WORKERS=s.val(); populateSelects(); renderSettings(); });
 }
 function saveOrders(){ const obj={}; orders.forEach(o=>{obj[o.id]=o}); db.ref('users/'+uid+'/orders').set(obj); }
 function saveManagers(){ db.ref('users/'+uid+'/managers').set(MANAGERS); }
 function saveStores(){   db.ref('users/'+uid+'/stores').set(STORES); }
+function saveManufacturers(){ db.ref('users/'+uid+'/manufacturers').set(MANUFACTURERS); }
 function saveWorkers(){  db.ref('users/'+uid+'/workers').set(WORKERS); }
 
 function populateSelects(){
-  const ms=document.getElementById('fManager'), ss=document.getElementById('fStore');
+  const ms=document.getElementById('fManager'), ss=document.getElementById('fStore'), mf=document.getElementById('fManuf');
   const w1=document.getElementById('fWorker1'), w2=document.getElementById('fWorker2');
-  const curM=ms.value, curS=ss.value, curW1=w1.value, curW2=w2.value;
-  ms.innerHTML='<option value="">— оберіть —</option>'+MANAGERS.map(m=>`<option value="${m}">${m}</option>`).join('');
-  ss.innerHTML='<option value="">— оберіть —</option>'+STORES.map(s=>`<option value="${s}">${s}</option>`).join('');
-  const wOpts='<option value="">— оберіть —</option>'+WORKERS.map(w=>`<option value="${w}">${w}</option>`).join('');
+  const curM=ms.value, curS=ss.value, curMf=mf.value, curW1=w1.value, curW2=w2.value;
+  ms.innerHTML='<option value="">— оберіть —</option>'+MANAGERS.map(m=>`<option value="${safeAttr(m)}">${safeText(m)}</option>`).join('');
+  ss.innerHTML='<option value="">— оберіть —</option>'+STORES.map(s=>`<option value="${safeAttr(s)}">${safeText(s)}</option>`).join('');
+  mf.innerHTML='<option value="">— оберіть —</option>'+MANUFACTURERS.map(m=>`<option value="${safeAttr(m)}">${safeText(m)}</option>`).join('');
+  const wOpts='<option value="">— оберіть —</option>'+WORKERS.map(w=>`<option value="${safeAttr(w)}">${safeText(w)}</option>`).join('');
   w1.innerHTML=wOpts; w2.innerHTML=wOpts;
-  if(curM) ms.value=curM; if(curS) ss.value=curS; if(curW1) w1.value=curW1; if(curW2) w2.value=curW2;
+  if(curM) ms.value=curM; if(curS) ss.value=curS; if(curMf) mf.value=curMf; if(curW1) w1.value=curW1; if(curW2) w2.value=curW2;
 }
 
 // ── UI init ──
@@ -1148,16 +1157,19 @@ function doSearch(){
 
 // ── SETTINGS ──
 function renderSettings(){
-  const mt=document.getElementById('managerTags'), st=document.getElementById('storeTags'), wt=document.getElementById('workerTags');
-  if(!mt||!st||!wt) return;
-  mt.innerHTML=MANAGERS.map((m,i)=>`<div class="tag active">${m}<span onclick="removeManager(${i})" style="cursor:pointer;color:var(--rose);margin-left:3px">×</span></div>`).join('');
-  st.innerHTML=STORES.map((s,i)=>`<div class="tag active">${s}<span onclick="removeStore(${i})" style="cursor:pointer;color:var(--rose);margin-left:3px">×</span></div>`).join('');
-  wt.innerHTML=WORKERS.map((w,i)=>`<div class="tag active">${w}<span onclick="removeWorker(${i})" style="cursor:pointer;color:var(--rose);margin-left:3px">×</span></div>`).join('');
+  const mt=document.getElementById('managerTags'), st=document.getElementById('storeTags'), mft=document.getElementById('manufacturerTags'), wt=document.getElementById('workerTags');
+  if(!mt||!st||!mft||!wt) return;
+  mt.innerHTML=MANAGERS.map((m,i)=>`<div class="tag active">${safeText(m)}<span onclick="removeManager(${i})" style="cursor:pointer;color:var(--rose);margin-left:3px">×</span></div>`).join('');
+  st.innerHTML=STORES.map((s,i)=>`<div class="tag active">${safeText(s)}<span onclick="removeStore(${i})" style="cursor:pointer;color:var(--rose);margin-left:3px">×</span></div>`).join('');
+  mft.innerHTML=MANUFACTURERS.map((m,i)=>`<div class="tag active">${safeText(m)}<span onclick="removeManufacturer(${i})" style="cursor:pointer;color:var(--rose);margin-left:3px">×</span></div>`).join('');
+  wt.innerHTML=WORKERS.map((w,i)=>`<div class="tag active">${safeText(w)}<span onclick="removeWorker(${i})" style="cursor:pointer;color:var(--rose);margin-left:3px">×</span></div>`).join('');
 }
 function addManager(){const v=document.getElementById('newManagerIn').value.trim();if(!v)return;MANAGERS.push(v);document.getElementById('newManagerIn').value='';saveManagers();populateSelects();renderSettings()}
 function removeManager(i){MANAGERS.splice(i,1);saveManagers();populateSelects();renderSettings()}
 function addStore(){const v=document.getElementById('newStoreIn').value.trim();if(!v)return;STORES.push(v);document.getElementById('newStoreIn').value='';saveStores();populateSelects();renderSettings()}
 function removeStore(i){STORES.splice(i,1);saveStores();populateSelects();renderSettings()}
+function addManufacturer(){const v=document.getElementById('newManufacturerIn').value.trim();if(!v)return;if(!MANUFACTURERS.includes(v)) MANUFACTURERS.push(v);document.getElementById('newManufacturerIn').value='';saveManufacturers();populateSelects();renderSettings()}
+function removeManufacturer(i){MANUFACTURERS.splice(i,1);saveManufacturers();populateSelects();renderSettings()}
 function addWorker(){const v=document.getElementById('newWorkerIn').value.trim();if(!v)return;WORKERS.push(v);document.getElementById('newWorkerIn').value='';saveWorkers();populateSelects();renderSettings()}
 function removeWorker(i){WORKERS.splice(i,1);saveWorkers();populateSelects();renderSettings()}
 
@@ -1179,6 +1191,7 @@ function toast(msg){
   clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>el.classList.remove('show'),2600);
 }
 function safeText(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function safeAttr(v){return safeText(v).replace(/`/g,'&#96;');}
 function quickCall(e,phone){e.stopPropagation(); if(phone) location.href='tel:'+phone;}
 function quickMap(e,addr){e.stopPropagation(); if(addr) window.open('https://maps.google.com/?q='+encodeURIComponent(addr+', Україна'),'_blank');}
 function setOrderStatus(e,id,status){
@@ -1197,7 +1210,7 @@ function updateDebtPreview(){
   el.textContent=d<=0&&p>0?'Оплачено повністю':'Борг: '+Math.max(d,0).toLocaleString('uk-UA')+' грн';
 }
 function exportBackup(){
-  const data={version:2,exportedAt:new Date().toISOString(),orders,MANAGERS,STORES,WORKERS};
+  const data={version:3,exportedAt:new Date().toISOString(),orders,MANAGERS,STORES,MANUFACTURERS,WORKERS};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='montazhpro_backup_'+fmtKey(new Date())+'.json'; a.click(); URL.revokeObjectURL(a.href);
   toast('Резервну копію збережено');
@@ -1211,8 +1224,9 @@ function importBackup(ev){
       orders=Array.isArray(data.orders)?data.orders:[];
       if(Array.isArray(data.MANAGERS)) MANAGERS=data.MANAGERS;
       if(Array.isArray(data.STORES)) STORES=data.STORES;
+      if(Array.isArray(data.MANUFACTURERS)) MANUFACTURERS=data.MANUFACTURERS;
       if(Array.isArray(data.WORKERS)) WORKERS=data.WORKERS;
-      saveOrders(); saveManagers(); saveStores(); saveWorkers(); populateSelects(); renderSettings(); render(); toast('Дані імпортовано');
+      saveOrders(); saveManagers(); saveStores(); saveManufacturers(); saveWorkers(); populateSelects(); renderSettings(); render(); toast('Дані імпортовано');
     }catch(e){alert('Не вдалося імпортувати файл: '+e.message)}
   }; r.readAsText(file); ev.target.value='';
 }
@@ -1290,6 +1304,7 @@ function editOrder(id){
   document.getElementById('fElevator').value=o.elevator||'yes';
   document.getElementById('fDoorType').value=o.doorType||'';
   document.getElementById('fMaterial').value=o.material||'';
+  if(o.manufacturer && !MANUFACTURERS.includes(o.manufacturer)){MANUFACTURERS.push(o.manufacturer); saveManufacturers(); populateSelects();}
   document.getElementById('fManuf').value=o.manufacturer||'';
   document.getElementById('fWidth').value=o.doorWidth||'';
   document.getElementById('fHeight').value=o.doorHeight||'';
@@ -1330,7 +1345,8 @@ function saveOrder(){
   const phone=document.getElementById('fPhone').value.trim();
   const addr=document.getElementById('fAddr').value.trim();
   const manager=document.getElementById('fManager').value;
-  if(!date||!time||!name||!phone||!addr||!manager){alert('Заповніть обов\'язкові поля (*)');return}
+  const manufacturer=document.getElementById('fManuf').value;
+  if(!date||!time||!name||!phone||!addr||!manager||!manufacturer){alert('Заповніть обов\'язкові поля (*)');return}
   const priceVal=+document.getElementById('fPrice').value||0, prepayVal=+document.getElementById('fPrepay').value||0;
   if(prepayVal>priceVal && priceVal>0){alert('Передплата не може бути більшою за повну суму');return}
   const works=[...document.querySelectorAll('#worksCheckRow .chk-item.checked')].map(el=>el.querySelector('input').value);
@@ -1339,7 +1355,7 @@ function saveOrder(){
     clientName:name,clientPhone:phone,clientPhone2:document.getElementById('fPhone2').value.trim(),
     address:addr,floor:document.getElementById('fFloor').value,elevator:document.getElementById('fElevator').value,
     doorType:document.getElementById('fDoorType').value,material:document.getElementById('fMaterial').value,
-    manufacturer:document.getElementById('fManuf').value.trim(),
+    manufacturer,
     doorWidth:document.getElementById('fWidth').value,doorHeight:document.getElementById('fHeight').value,
     quantity:+document.getElementById('fQty').value||1,
     doorSide:document.getElementById('fSide').value,doorColor:document.getElementById('fColor').value,
