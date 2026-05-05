@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#07070a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>MontazhPro — Монтаж дверей</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -290,6 +293,18 @@ body{padding-bottom:88px}
 .m-del{background:rgba(244,63,94,.12);color:var(--rose)}
 .m-del:hover{background:rgba(244,63,94,.2)}
 
+
+/* ── COMMERCIAL POLISH ── */
+.period-today{width:auto;padding:0 14px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.quick-actions{display:flex;gap:6px;flex-wrap:wrap;margin:-2px 0 10px}
+.qa{display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--muted);font-size:11px;font-weight:700;text-decoration:none;cursor:pointer;transition:all var(--t);font-family:inherit}
+.qa:hover{border-color:var(--border2);color:var(--text);transform:translateY(-1px)}
+.qa svg{width:12px;height:12px}.qa.green{color:var(--green);background:rgba(34,197,94,.07)}.qa.sky{color:var(--sky);background:rgba(56,189,248,.07)}.qa.rose{color:var(--rose);background:rgba(244,63,94,.07)}
+.form-hint{font-size:11px;color:var(--muted);margin-top:-6px;margin-bottom:12px;line-height:1.45}.debt-preview{padding:10px 12px;border-radius:10px;background:var(--bg3);border:1px solid var(--border);font-size:13px;font-weight:700}.debt-preview.good{color:var(--green);border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.07)}.debt-preview.warn{color:var(--amber);border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.07)}.debt-preview.bad{color:var(--rose);border-color:rgba(244,63,94,.25);background:rgba(244,63,94,.07)}
+.settings-actions{display:flex;gap:8px;flex-wrap:wrap}.danger-zone{border-color:rgba(244,63,94,.25)!important;background:rgba(244,63,94,.05)!important}
+.toast{position:fixed;right:16px;bottom:92px;z-index:900;max-width:360px;padding:12px 15px;background:var(--bg2);border:1px solid var(--border2);border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,.45);font-size:13px;font-weight:700;transform:translateY(16px);opacity:0;pointer-events:none;transition:all var(--t)}.toast.show{transform:translateY(0);opacity:1}
+@media(max-width:520px){.panel{padding:14px}.navbar{height:54px;padding:0 10px}.nav-brand-text{display:none}.user-name{display:none}.period-label{min-width:130px;font-size:14px}.period-bar{gap:6px}.period-btn{width:32px;height:32px}.period-today{padding:0 10px}.cal-card{padding:14px}.cal-grid{gap:3px}.cal-day{font-size:11px}.ocard{padding:14px 14px 14px 17px}.ocard-row{grid-template-columns:1fr}.quick-actions .qa{flex:1;justify-content:center}.modal-overlay{padding:58px 10px 90px}.modal-box{padding:20px 14px}.fg-row3{grid-template-columns:1fr}.modal-btns{position:sticky;bottom:0;background:linear-gradient(180deg,transparent,var(--bg2) 25%);padding-top:16px}.settings-actions .btn-sm{flex:1}.toast{left:12px;right:12px;bottom:86px}}
+
 /* ── NO PRINT ── */
 @media print{
   .stats-strip,.navbar,.bottom-nav,.modal-overlay,.period-bar,.view-tabs,.no-print,.route-card{display:none!important}
@@ -424,6 +439,7 @@ body{padding-bottom:88px}
   <div id="panel-schedule" class="panel active" style="margin-top:56px">
     <div class="period-bar">
       <button class="period-btn" id="prevBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="period-btn period-today" id="todayBtn" title="Повернутись на сьогодні">Сьогодні</button>
       <div class="period-label" id="periodLabel"></div>
       <button class="period-btn" id="nextBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
     </div>
@@ -496,6 +512,22 @@ body{padding-bottom:88px}
       <div style="display:flex;gap:7px;margin-top:10px"><input class="inp-tag" id="newWorkerIn" placeholder="Ім'я монтажника..."><button class="btn-sm" onclick="addWorker()">+ Додати</button></div>
     </div>
     <div class="settings-section">
+      <div class="settings-title">Резервна копія</div>
+      <div class="settings-list">
+        <div class="settings-item">
+          <div class="settings-item-l">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <div><div class="settings-item-name">Експорт / імпорт даних</div><div class="settings-item-desc">Збережи копію заявок на компʼютер або перенеси в інший акаунт.</div></div>
+          </div>
+          <div class="settings-actions">
+            <button class="btn-sm" onclick="exportBackup()">Експорт JSON</button>
+            <button class="btn-sm" onclick="document.getElementById('backupIn').click()">Імпорт</button>
+            <input type="file" id="backupIn" accept="application/json" style="display:none" onchange="importBackup(event)">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="settings-section">
       <div class="settings-title">Акаунт</div>
       <div class="settings-list">
         <div class="settings-item">
@@ -545,6 +577,7 @@ body{padding-bottom:88px}
       <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     </div>
     <input type="hidden" id="editId">
+    <div class="form-hint">Заповнюй тільки те, що реально потрібно бригаді. Чим менше хаосу в заявці — тим менше дзвінків “а де адреса?” посеред монтажу.</div>
 
     <!-- Дата/Час/Пріоритет -->
     <div class="fg-row3 fg">
@@ -692,6 +725,7 @@ body{padding-bottom:88px}
         </select>
       </div>
     </div>
+    <div id="debtPreview" class="debt-preview">Борг: 0 грн</div>
     <div class="fg-row fg">
       <div class="fg"><label>Статус замовлення</label>
         <select id="fStatus" class="f-sel">
@@ -765,6 +799,8 @@ body{padding-bottom:88px}
   </table>
   <div class="pf"><span>MontazhPro — автоматична генерація</span><span id="pdfDate"></span></div>
 </div>
+
+<div id="toast" class="toast"></div>
 
 <script>
 // ── Firebase ──
@@ -856,9 +892,12 @@ function initUI(){
   document.querySelectorAll('[data-panel]').forEach(b=>b.addEventListener('click',()=>activatePanel(b.dataset.panel)));
   document.querySelectorAll('.view-tab').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
   document.getElementById('prevBtn').onclick=()=>{ navPrev(); render(); };
+  document.getElementById('todayBtn').onclick=()=>{ current=new Date(); render(); };
   document.getElementById('nextBtn').onclick=()=>{ navNext(); render(); };
   document.getElementById('modal').onclick=e=>{ if(e.target.id==='modal') closeModal(); };
   document.getElementById('searchIn').oninput=doSearch;
+  ['fPrice','fPrepay'].forEach(id=>document.getElementById(id).addEventListener('input',updateDebtPreview));
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
   populateSelects(); renderSettings(); render();
 }
 
@@ -1035,7 +1074,13 @@ function cardHTML(o){
     </div>
     <div class="ocard-name">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      ${o.clientName}
+      ${safeText(o.clientName)}
+    </div>
+    <div class="quick-actions">
+      <button class="qa green" onclick="quickCall(event,'${String(o.clientPhone||'').replace(/'/g,"\'")}')">☎ Дзвінок</button>
+      <button class="qa sky" onclick="quickMap(event,'${String(o.address||'').replace(/'/g,"\'")}')">📍 Карта</button>
+      ${o.status!=='done'?`<button class="qa green" onclick="setOrderStatus(event,${o.id},'done')">✓ Виконано</button>`:''}
+      <button class="qa" onclick="duplicateOrder(event,${o.id})">⧉ Копія</button>
     </div>
     <div class="ocard-row">
       <div class="ocard-field"><div class="of-lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 11.5a19.79 19.79 0 01-3.07-8.67A2 2 0 012.88 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Телефон</div><div class="of-val"><a href="tel:${o.clientPhone}" style="color:inherit;text-decoration:none">${o.clientPhone}</a>${o.clientPhone2?`<br><a href="tel:${o.clientPhone2}" style="color:var(--muted);text-decoration:none;font-size:11px">${o.clientPhone2}</a>`:''}</div></div>
@@ -1211,9 +1256,56 @@ function showNotifs(){
   else alert('Найближчих замовлень немає');
 }
 
+
+// ── QUICK ACTIONS / BACKUP ──
+function toast(msg){
+  const el=document.getElementById('toast'); if(!el) return alert(msg);
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>el.classList.remove('show'),2600);
+}
+function safeText(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function quickCall(e,phone){e.stopPropagation(); if(phone) location.href='tel:'+phone;}
+function quickMap(e,addr){e.stopPropagation(); if(addr) window.open('https://maps.google.com/?q='+encodeURIComponent(addr+', Україна'),'_blank');}
+function setOrderStatus(e,id,status){
+  e.stopPropagation(); const o=orders.find(x=>x.id===id); if(!o) return;
+  o.status=status; saveOrders(); render(); renderAnalytics(); renderRoute(); doSearch(); toast(status==='done'?'Позначено як виконано':'Статус оновлено');
+}
+function duplicateOrder(e,id){
+  e.stopPropagation(); const o=orders.find(x=>x.id===id); if(!o) return;
+  const copy={...o,id:Math.max(0,...orders.map(x=>x.id))+1,status:'client',prepay:0,notes:(o.notes?o.notes+'\n':'')+'Копія заявки'};
+  orders.push(copy); saveOrders(); render(); toast('Заявку скопійовано');
+}
+function updateDebtPreview(){
+  const p=+document.getElementById('fPrice').value||0, pre=+document.getElementById('fPrepay').value||0, d=p-pre;
+  const el=document.getElementById('debtPreview'); if(!el) return;
+  el.className='debt-preview '+(d<=0&&p>0?'good':pre>0?'warn':p>0?'bad':'');
+  el.textContent=d<=0&&p>0?'Оплачено повністю':'Борг: '+Math.max(d,0).toLocaleString('uk-UA')+' грн';
+}
+function exportBackup(){
+  const data={version:2,exportedAt:new Date().toISOString(),orders,MANAGERS,STORES,WORKERS};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='montazhpro_backup_'+fmtKey(new Date())+'.json'; a.click(); URL.revokeObjectURL(a.href);
+  toast('Резервну копію збережено');
+}
+function importBackup(ev){
+  const file=ev.target.files[0]; if(!file) return;
+  const r=new FileReader(); r.onload=()=>{
+    try{
+      const data=JSON.parse(r.result);
+      if(!confirm('Імпортувати дані? Поточні заявки будуть замінені.')) return;
+      orders=Array.isArray(data.orders)?data.orders:[];
+      if(Array.isArray(data.MANAGERS)) MANAGERS=data.MANAGERS;
+      if(Array.isArray(data.STORES)) STORES=data.STORES;
+      if(Array.isArray(data.WORKERS)) WORKERS=data.WORKERS;
+      saveOrders(); saveManagers(); saveStores(); saveWorkers(); populateSelects(); renderSettings(); render(); toast('Дані імпортовано');
+    }catch(e){alert('Не вдалося імпортувати файл: '+e.message)}
+  }; r.readAsText(file); ev.target.value='';
+}
+
 // ── CHECKS ──
 function toggleChk(label){
   label.classList.toggle('checked');
+  const input=label.querySelector('input'); if(input) input.checked=label.classList.contains('checked');
 }
 
 // ── MODAL ──
@@ -1255,6 +1347,7 @@ function openModal(){
   document.getElementById('fMaterials').value='';
   document.querySelectorAll('#worksCheckRow .chk-item').forEach(el=>el.classList.remove('checked'));
   document.querySelectorAll('#worksCheckRow input[type=checkbox]').forEach(el=>el.checked=false);
+  updateDebtPreview();
   document.getElementById('modal').classList.add('open');
 }
 
@@ -1301,6 +1394,7 @@ function editOrder(id){
     el.classList.toggle('checked',works.includes(val));
     el.querySelector('input').checked=works.includes(val);
   });
+  updateDebtPreview();
   document.getElementById('modal').classList.add('open');
 }
 
@@ -1314,6 +1408,8 @@ function saveOrder(){
   const addr=document.getElementById('fAddr').value.trim();
   const manager=document.getElementById('fManager').value;
   if(!date||!time||!name||!phone||!addr||!manager){alert('Заповніть обов\'язкові поля (*)');return}
+  const priceVal=+document.getElementById('fPrice').value||0, prepayVal=+document.getElementById('fPrepay').value||0;
+  if(prepayVal>priceVal && priceVal>0){alert('Передплата не може бути більшою за повну суму');return}
   const works=[...document.querySelectorAll('#worksCheckRow .chk-item.checked')].map(el=>el.querySelector('input').value);
   const o={
     date,time,priority:document.getElementById('fPriority').value,
@@ -1328,7 +1424,7 @@ function saveOrder(){
     manager,store:document.getElementById('fStore').value,
     worker1:document.getElementById('fWorker1').value,worker2:document.getElementById('fWorker2').value,
     duration:document.getElementById('fDuration').value,vehicle:document.getElementById('fVehicle').value,
-    price:+document.getElementById('fPrice').value||0,prepay:+document.getElementById('fPrepay').value||0,
+    price:priceVal,prepay:prepayVal,
     payMethod:document.getElementById('fPayMethod').value,
     status:document.getElementById('fStatus').value,warranty:document.getElementById('fWarranty').value,
     notes:document.getElementById('fNotes').value.trim(),materials:document.getElementById('fMaterials').value.trim()
